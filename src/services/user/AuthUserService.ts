@@ -17,8 +17,18 @@ class AuthUserService {
         const user = await prismaClient.user.findFirst({
             where: {
                 email: email
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                password: true,
+                department_id: true,
+                photo: true,
+                department: true
             }
         })
+
 
         if (!user) {
             return {
@@ -54,7 +64,9 @@ class AuthUserService {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                token: token
+                token: token,
+                department: user.department,
+                photo: user.photo
             }
         };
     }

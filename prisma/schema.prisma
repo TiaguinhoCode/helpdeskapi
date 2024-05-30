@@ -22,6 +22,7 @@ model User {
   photo         String?
   department_id String
   department    Department @relation(fields: [department_id], references: [id])
+  Host          Host[]
 
   @@map("users")
 }
@@ -32,4 +33,20 @@ model Department {
   user   User[]
 
   @@map("departments")
+}
+
+model Host {
+  id         String   @id @default(uuid())
+  host       String
+  processor  String
+  ram_memory String
+  hdd        Boolean?
+  sdd        Boolean?
+  storage    String
+  system     String
+  switch     String?
+  user_id    String
+  user       User     @relation(fields: [user_id], references: [id])
+
+  @@map("hosts")
 }

@@ -10,9 +10,22 @@ class CreateUserController {
 
         const createUserService = new CreateUserService()
 
-        const user = await createUserService.execute({ name, email, password, department_id })
+        try {
+            const user = await createUserService.execute({ name, email, password, department_id })
 
-        return res.json({ message: 'Successfully created', user: user })
+            return res.json({ message: 'Successfully created', user: user })
+        } catch (err) {
+            if (err.message === "Email incorreto!") {
+                return res.status(404).json({ error: err.message });
+            } 
+            else if (err.message === "Usuario já existe") {
+                return res.status(404).json({ error: err.message });
+            }
+            else {
+                return res.status(500).json({ error: 'Erro interno do servidor' });
+            }
+        }
+
     }
 }
 

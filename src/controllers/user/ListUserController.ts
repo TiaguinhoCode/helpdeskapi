@@ -1,8 +1,8 @@
 // Servidor 
 import { Request, Response } from "express";
 
-// Servidor
-import { ListUserService } from "../../services/user/ListUserService"; 
+// Service
+import { ListUserService } from "../../services/user/ListUserService";
 
 class ListUserController {
     async handle(req: Request, res: Response) {
@@ -14,4 +14,4 @@ class ListUserController {
     }
 }
 
-export {ListUserController}
+export { ListUserController }

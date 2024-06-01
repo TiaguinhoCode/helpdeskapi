@@ -13,6 +13,7 @@ import { RecoverPasswordController } from "./controllers/user/RecoverPasswordCon
 import { RemoveUserController } from "./controllers/user/RemoveUserController";
 import { ListUserByDepartmentController } from "./controllers/user/ListUserByDepartmentController";
 import { ListTechnicianController } from "./controllers/technician/ListTechnicianController";
+import { RemoveDepartmentController } from "./controllers/department/RemoveDepartmentController";
 
 // Middleware
 import { isAutheticated } from "./middlewares/isAutheticated";
@@ -23,6 +24,7 @@ const router = Router();
 // Department
 router.post('/create/department', isAutheticated, isAuthorized, new CreateDepartmentController().handle)
 router.get('/departments', isAutheticated, isAuthorized, new ListDepartmentControllers().handle)
+router.delete('/delete/department', isAutheticated, isAuthorized, new RemoveDepartmentController().handle)
 
 // Users
 router.post('/create/user', isAutheticated, isAuthorized, new CreateUserController().handle)

@@ -23,6 +23,7 @@ model User {
   department_id String
   department    Department @relation(fields: [department_id], references: [id])
   Host          Host[]
+  Ticket        Ticket[]
 
   @@map("users")
 }
@@ -47,6 +48,50 @@ model Host {
   switch     String?
   user_id    String
   user       User     @relation(fields: [user_id], references: [id])
+  Ticket     Ticket[]
 
   @@map("hosts")
+}
+
+model Ticket {
+  id                  String    @id @default(uuid())
+  problem_description String
+  photo_problem       String
+  oppening_date       DateTime? @default(now())
+  service_date        DateTime?
+  closing_date        DateTime?
+  user_id             String
+  status_id           String
+  priority_id         String
+  host_id             String
+  technician          String
+  resolution_id       String
+
+  user       User       @relation(fields: [user_id], references: [id])
+  status     Status     @relation(fields: [status_id], references: [id], name: "TicketStatus")
+  host       Host       @relation(fields: [host_id], references: [id])
+  priority   Priority   @relation(fields: [priority_id], references: [id], name: "PriorityStatus")
+  resolution Resolution @relation(fields: [resolution_id], references: [id], name: "ResolutionStatus")
+}
+
+model Status {
+  id     String @id @default(uuid())
+  status String
+
+  tickets Ticket[] @relation(name: "TicketStatus")
+}
+
+model Priority {
+  id             String @id @default(uuid())
+  priority_level String
+
+  tickets Ticket[] @relation(name: "PriorityStatus")
+}
+
+model Resolution {
+  id               String @id @default(uuid())
+  description      String
+  resolution_photo String
+
+  tickets Ticket[] @relation(name: "ResolutionStatus")
 }

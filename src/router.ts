@@ -16,11 +16,13 @@ import { ListTechnicianController } from "./controllers/technician/ListTechnicia
 import { RemoveDepartmentController } from "./controllers/department/RemoveDepartmentController";
 import { CreateHostController } from "./controllers/host/CreateHostController";
 import { ListHostController } from "./controllers/host/ListHostController";
+import { UpdateHostController } from "./controllers/host/UpdateHostController";
+import { DetailHostController } from "./controllers/host/DetailHostController";
+import { RemoveHostController } from "./controllers/host/RemoveHostController";
 
 // Middleware
 import { isAutheticated } from "./middlewares/isAutheticated";
 import { isAuthorized } from "./middlewares/isAuthorized";
-import { UpdateHostController } from "./controllers/host/UpdateHostController";
 
 const router = Router();
 
@@ -45,7 +47,9 @@ router.get('/technician', isAutheticated, new ListTechnicianController().handle)
 // Hosts
 router.post('/create/host', isAutheticated, isAuthorized, new CreateHostController().handle)
 router.get('/host', isAutheticated, isAuthorized, new ListHostController().handle)
+router.get('/detail/host', isAutheticated, new DetailHostController().handle)
 router.put('/update/host', isAutheticated, isAuthorized, new UpdateHostController().handle)
+router.delete('/delete/host', isAutheticated, isAuthorized, new RemoveHostController().handle)
 
 router.get('/', (req: Request, res: Response) => {
     res.json({ message: 'ok' })

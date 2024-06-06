@@ -14,6 +14,8 @@ import { RemoveUserController } from "./controllers/user/RemoveUserController";
 import { ListUserByDepartmentController } from "./controllers/user/ListUserByDepartmentController";
 import { ListTechnicianController } from "./controllers/technician/ListTechnicianController";
 import { RemoveDepartmentController } from "./controllers/department/RemoveDepartmentController";
+import { CreateHostController } from "./controllers/host/CreateHostController";
+import { ListHostController } from "./controllers/host/ListHostController";
 
 // Middleware
 import { isAutheticated } from "./middlewares/isAutheticated";
@@ -38,6 +40,10 @@ router.delete('/delete/user', isAutheticated, isAuthorized, new RemoveUserContro
 
 // Tecnico
 router.get('/technician', isAutheticated, new ListTechnicianController().handle)
+
+// Hosts
+router.post('/create/host', isAutheticated, isAuthorized, new CreateHostController().handle)
+router.get('/host', isAutheticated, isAuthorized, new ListHostController().handle)
 
 router.get('/', (req: Request, res: Response) => {
     res.json({ message: 'ok' })

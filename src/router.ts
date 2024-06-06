@@ -20,6 +20,7 @@ import { ListHostController } from "./controllers/host/ListHostController";
 // Middleware
 import { isAutheticated } from "./middlewares/isAutheticated";
 import { isAuthorized } from "./middlewares/isAuthorized";
+import { UpdateHostController } from "./controllers/host/UpdateHostController";
 
 const router = Router();
 
@@ -44,6 +45,7 @@ router.get('/technician', isAutheticated, new ListTechnicianController().handle)
 // Hosts
 router.post('/create/host', isAutheticated, isAuthorized, new CreateHostController().handle)
 router.get('/host', isAutheticated, isAuthorized, new ListHostController().handle)
+router.put('/update/host', isAutheticated, isAuthorized, new UpdateHostController().handle)
 
 router.get('/', (req: Request, res: Response) => {
     res.json({ message: 'ok' })

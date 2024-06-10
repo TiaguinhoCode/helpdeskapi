@@ -19,6 +19,14 @@ import { ListHostController } from "./controllers/host/ListHostController";
 import { UpdateHostController } from "./controllers/host/UpdateHostController";
 import { DetailHostController } from "./controllers/host/DetailHostController";
 import { RemoveHostController } from "./controllers/host/RemoveHostController";
+import { CreateStatusController } from "./controllers/status/CreateStatusController";
+import { ListStatusController } from "./controllers/status/ListStatusController";
+import { CreatePriorityController } from "./controllers/priority/CreatePriorityController";
+import { listPriorityController } from "./controllers/priority/ListPriorityController";
+import { CreateResolutionController } from "./controllers/resolution/CreateResolutionController";
+import { ListResolutionController } from "./controllers/resolution/ListResolutionController";
+import { UpdateResolutionController } from "./controllers/resolution/UpdateResolutionController";
+import { RemoveResolutionController } from "./controllers/resolution/RemoveResolutionController";
 
 // Middleware
 import { isAutheticated } from "./middlewares/isAutheticated";
@@ -50,6 +58,20 @@ router.get('/host', isAutheticated, isAuthorized, new ListHostController().handl
 router.get('/detail/host', isAutheticated, new DetailHostController().handle)
 router.put('/update/host', isAutheticated, isAuthorized, new UpdateHostController().handle)
 router.delete('/delete/host', isAutheticated, isAuthorized, new RemoveHostController().handle)
+
+// Status
+router.post('/create/status', isAutheticated, isAuthorized, new CreateStatusController().handle)
+router.get('/status', isAutheticated, new ListStatusController().handle)
+
+// Priority
+router.post('/create/priority', isAutheticated, isAuthorized, new CreatePriorityController().handle)
+router.get('/priority', isAutheticated, new listPriorityController().handle)
+
+// Resolution
+router.post('/create/resolution', isAutheticated, isAuthorized, new CreateResolutionController().handle)
+router.get('/resolution', isAutheticated, new ListResolutionController().handle)
+router.put('/update/resolution', isAutheticated, isAuthorized, new UpdateResolutionController().handle)
+router.delete('/delete/resolution', isAutheticated, isAuthorized, new RemoveResolutionController().handle)
 
 router.get('/', (req: Request, res: Response) => {
     res.json({ message: 'ok' })

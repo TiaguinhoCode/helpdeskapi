@@ -64,7 +64,7 @@ model Ticket {
   status_id           String
   priority_id         String
   host_id             String
-  technician          String
+  technician          String?
   resolution_id       String
 
   user       User       @relation(fields: [user_id], references: [id])
@@ -91,7 +91,7 @@ model Priority {
 model Resolution {
   id               String @id @default(uuid())
   description      String
-  resolution_photo String
+  resolution_photo String?
 
   tickets Ticket[] @relation(name: "ResolutionStatus")
 }

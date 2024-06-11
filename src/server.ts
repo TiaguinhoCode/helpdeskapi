@@ -17,7 +17,7 @@ app.use(cors())
 app.use(express.json())
 app.use(router)
 
-app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp')))
+app.use('/files', express.static(path.resolve(process.cwd(), '..', 'tmp')))
 
 // Variavel de ambiente
 dotenv.config();

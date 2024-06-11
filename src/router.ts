@@ -27,11 +27,16 @@ import { CreateResolutionController } from "./controllers/resolution/CreateResol
 import { ListResolutionController } from "./controllers/resolution/ListResolutionController";
 import { UpdateResolutionController } from "./controllers/resolution/UpdateResolutionController";
 import { RemoveResolutionController } from "./controllers/resolution/RemoveResolutionController";
+import { CreateTicketController } from "./controllers/ticket/CreateTicketController";
+import { ListTicketController } from "./controllers/ticket/ListTicketController";
+import { TicketServedController } from "./controllers/ticket/TicketServedController";
+import { TicketFinalizedController } from "./controllers/ticket/TicketFinalizedController";
+import { UpdateTicketController } from "./controllers/ticket/UpdateTicketController";
+import { RemoveTicketController } from "./controllers/ticket/RemoveTicketController";
 
 // Middleware
 import { isAutheticated } from "./middlewares/isAutheticated";
 import { isAuthorized } from "./middlewares/isAuthorized";
-import { CreateTicketController } from "./controllers/ticket/CreateTicketController";
 
 const router = Router();
 
@@ -76,6 +81,11 @@ router.delete('/delete/resolution', isAutheticated, isAuthorized, new RemoveReso
 
 // Ticket
 router.post('/create/ticket', isAutheticated, new CreateTicketController().handle)
+router.get('/ticket', isAutheticated, new ListTicketController().handle)
+router.put('/ticket/served', isAutheticated, isAuthorized, new TicketServedController().handle)
+router.put('/ticket/finished', isAutheticated, isAuthorized, new TicketFinalizedController().handle)
+router.put('/ticket/update', isAutheticated, isAuthorized, new UpdateTicketController().handle)
+router.delete('/delete/ticket', isAutheticated, new RemoveTicketController().handle)
 
 router.get('/', (req: Request, res: Response) => {
     res.json({ message: 'ok' })

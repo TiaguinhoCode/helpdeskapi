@@ -8,11 +8,16 @@ import { router } from "./router";
 import cors from "cors";
 import dotenv from 'dotenv';
 
+// Servidor
+import path from "path";
+
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 app.use(router)
+
+app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp')))
 
 // Variavel de ambiente
 dotenv.config();

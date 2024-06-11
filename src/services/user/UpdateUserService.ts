@@ -41,7 +41,18 @@ class UpdateUserService {
             where: {
                 id: id
             },
-            data: data
+            data: data,
+            select: {
+                id: true,
+                name: true,
+                email: true,
+               photo: true,
+               department: {
+                select: {
+                    sector: true
+                }
+               }
+            }
         });
 
         return user

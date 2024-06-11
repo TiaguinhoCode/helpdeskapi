@@ -6,7 +6,8 @@ import { UpdateUserService } from "../../services/user/UpdateUserService";
 
 class UpdateUserController {
     async handle(req: Request, res: Response) {
-        const { id, name, email, department_id, photo } = req.body
+        const { id, name, email, department_id } = req.body
+        const { filename: photo } = req.file;
 
         const updateUserService = new UpdateUserService()
 

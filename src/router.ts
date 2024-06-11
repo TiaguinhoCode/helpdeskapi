@@ -1,6 +1,9 @@
 // Servidor
 import { Router, Request, Response } from "express";
 
+// Biblioteca
+import multer from "multer";
+
 // Controllers
 import { CreateDepartmentController } from "./controllers/department/CreateDepartmentController";
 import { ListDepartmentControllers } from "./controllers/department/ListDepartmentControllers";
@@ -38,7 +41,12 @@ import { RemoveTicketController } from "./controllers/ticket/RemoveTicketControl
 import { isAutheticated } from "./middlewares/isAutheticated";
 import { isAuthorized } from "./middlewares/isAuthorized";
 
+// Upload de fotos
+import uploadConfig from "./config/multer"
+
 const router = Router();
+
+const upload = multer(uploadConfig.upload("./tmp"))
 
 // Department
 router.post('/create/department', isAutheticated, isAuthorized, new CreateDepartmentController().handle)
@@ -51,7 +59,7 @@ router.post('/session', new AuthUserController().handle)
 router.get('/me', isAutheticated, new DetailuserController().handle)
 router.get('/users', isAutheticated, isAuthorized, new ListUserController().handle)
 router.get('/users/department', isAutheticated, isAuthorized, new ListUserByDepartmentController().handle)
-router.put('/update/user', isAutheticated, new UpdateUserController().handle)
+router.put('/update/user', isAutheticated, upload.single('file'), new UpdateUserController().handle)
 router.put('/recover/user', isAutheticated, new RecoverPasswordController().handle)
 router.delete('/delete/user', isAutheticated, isAuthorized, new RemoveUserController().handle)
 
@@ -80,10 +88,10 @@ router.put('/update/resolution', isAutheticated, isAuthorized, new UpdateResolut
 router.delete('/delete/resolution', isAutheticated, isAuthorized, new RemoveResolutionController().handle)
 
 // Ticket
-router.post('/create/ticket', isAutheticated, new CreateTicketController().handle)
+router.post('/create/ticket', isAutheticated, upload.single('file'), new CreateTicketController().handle)
 router.get('/ticket', isAutheticated, new ListTicketController().handle)
 router.put('/ticket/served', isAutheticated, isAuthorized, new TicketServedController().handle)
-router.put('/ticket/finished', isAutheticated, isAuthorized, new TicketFinalizedController().handle)
+router.put('/ticket/finished', isAutheticated, isAuthorized, upload.single('file'), new TicketFinalizedController().handle)
 router.put('/ticket/update', isAutheticated, isAuthorized, new UpdateTicketController().handle)
 router.delete('/delete/ticket', isAutheticated, new RemoveTicketController().handle)
 

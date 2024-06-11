@@ -5,10 +5,11 @@ import prismaClient from "../../prisma";
 interface TicketFinalizedRequest {
   id: string;
   description: string;
+  resolution_photo?: string;
 }
 
 class TicketFinalizedService {
-  async execute({ id, description }: TicketFinalizedRequest) {
+  async execute({ id, description, resolution_photo }: TicketFinalizedRequest) {
     const startedStatus = await prismaClient.status.findFirst({
       where: {
         id: "3ecf9ba9-0360-4338-81aa-8350a64e0e96",
@@ -20,6 +21,7 @@ class TicketFinalizedService {
     const createResolution = await prismaClient.resolution.create({
       data: {
         description: description,
+        resolution_photo: resolution_photo,
       },
     });
 

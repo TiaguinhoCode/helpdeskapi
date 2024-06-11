@@ -31,6 +31,7 @@ import { RemoveResolutionController } from "./controllers/resolution/RemoveResol
 // Middleware
 import { isAutheticated } from "./middlewares/isAutheticated";
 import { isAuthorized } from "./middlewares/isAuthorized";
+import { CreateTicketController } from "./controllers/ticket/CreateTicketController";
 
 const router = Router();
 
@@ -72,6 +73,9 @@ router.post('/create/resolution', isAutheticated, isAuthorized, new CreateResolu
 router.get('/resolution', isAutheticated, new ListResolutionController().handle)
 router.put('/update/resolution', isAutheticated, isAuthorized, new UpdateResolutionController().handle)
 router.delete('/delete/resolution', isAutheticated, isAuthorized, new RemoveResolutionController().handle)
+
+// Ticket
+router.post('/create/ticket', isAutheticated, new CreateTicketController().handle)
 
 router.get('/', (req: Request, res: Response) => {
     res.json({ message: 'ok' })

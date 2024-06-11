@@ -10,7 +10,7 @@ class ListStatusController {
 
     const listStatus = await listStatusService.execute();
 
-    return res.json({ message: "ok", hosts: listStatus });
+    return res.json({ message: "ok", status: listStatus });
   }
 }
 

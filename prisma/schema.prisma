@@ -56,22 +56,24 @@ model Host {
 model Ticket {
   id                  String    @id @default(uuid())
   problem_description String
-  photo_problem       String
+  photo_problem       String?
   oppening_date       DateTime? @default(now())
   service_date        DateTime?
   closing_date        DateTime?
   user_id             String
   status_id           String
-  priority_id         String
+  priority_id         String?
   host_id             String
   technician          String?
-  resolution_id       String
+  resolution_id       String?
 
   user       User       @relation(fields: [user_id], references: [id])
   status     Status     @relation(fields: [status_id], references: [id], name: "TicketStatus")
   host       Host       @relation(fields: [host_id], references: [id])
-  priority   Priority   @relation(fields: [priority_id], references: [id], name: "PriorityStatus")
-  resolution Resolution @relation(fields: [resolution_id], references: [id], name: "ResolutionStatus")
+  priority   Priority?   @relation(fields: [priority_id], references: [id], name: "PriorityStatus")
+  resolution Resolution? @relation(fields: [resolution_id], references: [id], name: "ResolutionStatus")
+
+  @@map("ticket")
 }
 
 model Status {
@@ -79,6 +81,8 @@ model Status {
   status String
 
   tickets Ticket[] @relation(name: "TicketStatus")
+
+  @@map("status")
 }
 
 model Priority {
@@ -86,12 +90,16 @@ model Priority {
   priority_level String
 
   tickets Ticket[] @relation(name: "PriorityStatus")
+
+  @@map("priority")
 }
 
 model Resolution {
-  id               String @id @default(uuid())
+  id               String  @id @default(uuid())
   description      String
   resolution_photo String?
 
   tickets Ticket[] @relation(name: "ResolutionStatus")
+
+  @@map("resolution")
 }

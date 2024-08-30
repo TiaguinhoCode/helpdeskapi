@@ -36,6 +36,7 @@ import { TicketServedController } from "./controllers/ticket/TicketServedControl
 import { TicketFinalizedController } from "./controllers/ticket/TicketFinalizedController";
 import { UpdateTicketController } from "./controllers/ticket/UpdateTicketController";
 import { RemoveTicketController } from "./controllers/ticket/RemoveTicketController";
+import { ListDetailUserController } from "./controllers/user/ListDetailUserController";
 
 // Middleware
 import { isAutheticated } from "./middlewares/isAutheticated";
@@ -59,6 +60,7 @@ router.post('/session', new AuthUserController().handle)
 router.get('/me', isAutheticated, new DetailuserController().handle)
 router.get('/users', isAutheticated, isAuthorized, new ListUserController().handle)
 router.get('/users/department', isAutheticated, isAuthorized, new ListUserByDepartmentController().handle)
+router.get('/detail/user', isAutheticated, new ListDetailUserController().handle)
 router.put('/update/user', isAutheticated, upload.single('file'), new UpdateUserController().handle)
 router.put('/recover/user', isAutheticated, new RecoverPasswordController().handle)
 router.delete('/delete/user', isAutheticated, isAuthorized, new RemoveUserController().handle)

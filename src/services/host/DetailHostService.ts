@@ -24,6 +24,7 @@ class DetailHostService {
         system: true,
         user: {
           select: {
+            id: true,
             name: true,
             email: true,
             photo: true,
